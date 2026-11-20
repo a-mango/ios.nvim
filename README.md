@@ -85,8 +85,8 @@ filetype changes.
 On an indented line, the candidates depend on the section the line belongs to,
 i.e. the nearest line above it that starts at column 0 and is not a comment.
 The sections covered are `interface`, `router`, `line`, `ip access-list`,
-`route-map`, `vrf`, `class-map`, `policy-map` and `vlan`. The keyword tables are
-in `lua/ios/keywords.lua`.
+`ipv6 access-list`, `ip dhcp pool`, `route-map`, `vrf`, `class-map`,
+`policy-map` and `vlan`. The keyword tables are in `lua/ios/keywords.lua`.
 
 ## Snippets
 

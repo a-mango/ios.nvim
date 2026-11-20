@@ -1,6 +1,19 @@
 local keywords = require("ios.keywords")
 local M = {}
 
+--- Return the keyword list for a section header, trying its first three words,
+--- then two, then one.
+local function section_keywords(header)
+  local words = vim.split(vim.trim(header), "%s+")
+  for n = math.min(#words, 3), 1, -1 do
+    local list = keywords.sections[table.concat(words, " ", 1, n)]
+    if list then
+      return list
+    end
+  end
+  return {}
+end
+
 --- Find the list of candidate commands for the line at `lnum`.
 local function candidates_for(lnum)
   local line = vim.fn.getline(lnum)
@@ -10,8 +23,7 @@ local function candidates_for(lnum)
   for l = lnum - 1, 1, -1 do
     local text = vim.fn.getline(l)
     if text:match("^%S") and not text:match("^!") then
-      local first = text:match("^(%S+)")
-      return keywords.sections[first] or {}
+      return section_keywords(text)
     end
   end
   return {}

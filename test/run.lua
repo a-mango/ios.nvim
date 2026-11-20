@@ -49,6 +49,10 @@ vim.api.nvim_win_set_cursor(0, { l, 1 })
 local c = complete._candidates_for(l)
 check("interface completion context", vim.tbl_contains(c, "switchport mode trunk"))
 check("global context", vim.tbl_contains(complete._candidates_for(find("^hostname")), "interface"))
+check("acl completion context", vim.tbl_contains(complete._candidates_for(find(" permit tcp")), "remark"))
+local dhcp = complete._candidates_for(find(" default%-router"))
+check("dhcp pool completion context", vim.tbl_contains(dhcp, "dns-server"))
+check("dhcp pool gets no acl keywords", not vim.tbl_contains(dhcp, "permit"))
 
 -- content detection
 vim.cmd("edit test/fixtures/sample.cfg")

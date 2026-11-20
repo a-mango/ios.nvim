@@ -44,13 +44,20 @@ M.acl = { "permit", "deny", "remark", "evaluate", "permit ip any any", "deny ip 
 
 M.route_map = { "match", "set", "continue", "description" }
 
--- Map section-opening command (first word) to a keyword list.
+M.dhcp_pool = {
+  "network", "default-router", "dns-server", "domain-name", "lease",
+  "netbios-name-server", "option", "host", "client-identifier",
+}
+
+-- Map a section header to a keyword list. A key holds the first one to three
+-- words of the header, and the longest key that matches is used.
 M.sections = {
   interface = M.interface,
   router = M.router,
   line = M.line,
-  ["ip"] = M.acl, -- ip access-list ...
-  ["ipv6"] = M.acl,
+  ["ip access-list"] = M.acl,
+  ["ipv6 access-list"] = M.acl,
+  ["ip dhcp pool"] = M.dhcp_pool,
   ["route-map"] = M.route_map,
   ["vrf"] = { "rd", "address-family", "route-target export", "route-target import", "description" },
   ["class-map"] = { "match", "description" },
