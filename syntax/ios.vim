@@ -18,6 +18,10 @@ syn match iosText "\S.*$" contained
 syn match iosDescKw "^\s*\(ip \|ipv6 \)\=\(access-list\s\+\S\+\s\+\d\+\s\+\)\=remark\>" nextgroup=iosText skipwhite
 syn match iosDescKw "^\s*access-list\s\+\d\+\s\+remark\>" nextgroup=iosText skipwhite
 
+" ip and ipv6 are a match defined before the section starters. As keywords they
+" would take priority and hide `ip access-list` or `ip dhcp pool` at column 0.
+syn match iosKeyword "\<ip\(v6\)\=\>"
+
 " Section starters (column 0)
 syn match iosSection "^\(interface\|router\|line\|route-map\|vrf\|class-map\|policy-map\|crypto\|aaa\|control-plane\|archive\|vlan\|ip access-list\|ipv6 access-list\|ip dhcp pool\|key chain\|track\|redundancy\|spanning-tree\|snmp-server\|ntp\|logging\|hostname\|username\|enable\|service\|banner\)\>"
 syn match iosSection "^\s\+address-family\>"
@@ -33,7 +37,7 @@ syn keyword iosShutdown shutdown
 
 " Common keywords
 syn keyword iosKeyword switchport trunk access allowed native vlan mode
-syn keyword iosKeyword ip ipv6 address helper-address access-group access-class
+syn keyword iosKeyword address helper-address access-group access-class
 syn keyword iosKeyword network neighbor redistribute passive-interface router-id
 syn keyword iosKeyword transport input output exec-timeout login password secret
 syn keyword iosKeyword duplex speed mtu bandwidth encapsulation channel-group
