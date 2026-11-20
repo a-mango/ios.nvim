@@ -8,8 +8,9 @@ setup call.
 
 ## Requirements
 
-- Neovim. The plugin is developed on Neovim 0.12, and CI runs the test suite on
-  the current stable and nightly releases.
+- Neovim. The plugin is developed on Neovim 0.12, and the continuous
+  integration (CI) workflow runs the test suite on the current stable and
+  nightly releases.
 - [LuaSnip](https://github.com/L3MON4D3/LuaSnip) (optional), to load the snippets
   through `setup()`.
 
@@ -43,7 +44,7 @@ The following files are set to the `ios` filetype:
 
 - files with the `.ios` extension,
 - files named `*-confg`, which is the default name IOS gives a configuration
-  copied over TFTP (e.g. `router1-confg`),
+  copied over Trivial File Transfer Protocol (TFTP), e.g. `router1-confg`,
 - files named `running-config` or `startup-config`.
 
 Files ending in `.cfg`, `.conf` or `.txt` are set to `ios` only when one of
@@ -59,7 +60,8 @@ and `shutdown`. It also matches the following values:
 
 - interface names in long and short form (`GigabitEthernet0/0/1`, `Gi1/0/1`,
   `Port-channel1.10`),
-- IPv4 addresses, masks and prefixes, IPv6 addresses and MAC addresses,
+- IPv4 addresses, masks and prefixes, IPv6 addresses and Media Access Control
+  (MAC) addresses,
 - the hash that follows `secret <n>` and `password <n>`,
 - banner bodies, whatever the delimiter.
 
@@ -72,8 +74,9 @@ group links to a standard highlight group (`Comment`, `Statement`, `Number`,
 
 The ftplugin sets `commentstring` to `! %s`, indents by one space (the indent
 IOS uses in its own output), folds by indent and adds `-` to `iskeyword` so that
-`access-list` or `Port-channel` count as one word. All options are local to the
-buffer and are reverted when the filetype changes.
+`access-list` or `Port-channel` count as one word. All options are set locally
+(`foldmethod` on the window, the others on the buffer) and are reverted when the
+filetype changes.
 
 ## Completion
 
@@ -92,21 +95,21 @@ The snippets are stored in VSCode format in `snippets/ios.json` and declared in
 installed. Other engines that read VSCode-format snippets can load them from the
 plugin directory. The following prefixes are available:
 
-| Prefix   | Expands to                                                                  |
-| -------- | --------------------------------------------------------------------------- |
-| `int`    | Routed interface with an IPv4 address                                       |
-| `svi`    | Switch Virtual Interface (SVI) for a Virtual LAN (VLAN)                     |
-| `access` | Access port with PortFast and BPDU guard                                    |
-| `trunk`  | 802.1Q trunk port                                                           |
-| `acl`    | Extended named Access Control List (ACL)                                    |
-| `ospf`   | Open Shortest Path First (OSPF) process                                     |
-| `bgp`    | Border Gateway Protocol (BGP) process with an IPv4 address family           |
-| `route`  | Static route                                                                |
-| `vlan`   | VLAN definition                                                             |
-| `ssh`    | SSH version 2 with local Authentication, Authorization and Accounting (AAA) |
-| `ntp`    | Network Time Protocol (NTP) server and syslog host                          |
-| `banner` | Message of the day (MOTD) banner                                            |
-| `po`     | Link Aggregation Control Protocol (LACP) port-channel                       |
+| Prefix   | Expands to                                                                       |
+| -------- | -------------------------------------------------------------------------------- |
+| `int`    | Routed interface with an IPv4 address                                            |
+| `svi`    | Switch Virtual Interface (SVI) for a Virtual Local Area Network (VLAN)           |
+| `access` | Access port with PortFast and Bridge Protocol Data Unit (BPDU) guard             |
+| `trunk`  | 802.1Q trunk port                                                                |
+| `acl`    | Extended named Access Control List (ACL)                                         |
+| `ospf`   | Open Shortest Path First (OSPF) process                                          |
+| `bgp`    | Border Gateway Protocol (BGP) process with an IPv4 address family                |
+| `route`  | Static route                                                                     |
+| `vlan`   | VLAN definition                                                                  |
+| `ssh`    | Secure Shell (SSH) with local Authentication, Authorization and Accounting (AAA) |
+| `ntp`    | Network Time Protocol (NTP) server and syslog host                               |
+| `banner` | Message of the day (MOTD) banner                                                 |
+| `po`     | Link Aggregation Control Protocol (LACP) port-channel                            |
 
 ## Development
 

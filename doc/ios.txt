@@ -41,7 +41,7 @@ The following files are set to the `ios` filetype:
 
 - files with the `.ios` extension,
 - files named `*-confg`, which is the default name IOS gives a configuration
-  copied over TFTP (e.g. `router1-confg`),
+  copied over Trivial File Transfer Protocol (TFTP), e.g. `router1-confg`,
 - files named `running-config` or `startup-config`.
 
 Files ending in `.cfg`, `.conf` or `.txt` are set to `ios` only when one of
@@ -54,8 +54,9 @@ Other files with these extensions keep the filetype Neovim gives them.
 
 The syntax file highlights comments, section commands at column 0, `no` and
 `default`, `permit`, `deny`, `shutdown`, interface names in long and short
-form, IPv4 and IPv6 addresses, masks, prefixes, MAC addresses, the hash that
-follows `secret <n>` and `password <n>`, and banner bodies with any delimiter.
+form, IPv4 and IPv6 addresses, masks, prefixes, Media Access Control (MAC)
+addresses, the hash that follows `secret <n>` and `password <n>`, and banner
+bodies with any delimiter.
 
 The text after `description` and `remark` is shown as a string, so keywords
 inside it are not highlighted. Every group links to a standard highlight
@@ -64,7 +65,8 @@ group, so the active colorscheme applies.
 ==============================================================================
 5. BUFFER SETTINGS                                              *ios-ftplugin*
 
-The ftplugin sets the following buffer-local options:
+The ftplugin sets the following local options ('foldmethod' on the window,
+the others on the buffer):
 
 - 'commentstring' to `! %s` and 'comments' to `:!`,
 - 'shiftwidth', 'tabstop' and 'softtabstop' to 1, with 'expandtab',
@@ -89,8 +91,7 @@ The keyword tables are in `lua/ios/keywords.lua`.
 7. SNIPPETS                                                     *ios-snippets*
 
 The snippets are stored in VSCode format in `snippets/ios.json` and declared
-in `package.json`. With LuaSnip, call |ios.setup()| or load them directly:
->lua
+in `package.json`. With LuaSnip, call |ios.setup()| or run the loader: >lua
 
     require("luasnip.loaders.from_vscode").lazy_load({
       paths = { "<plugin dir>" },
