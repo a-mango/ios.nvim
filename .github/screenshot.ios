@@ -1,0 +1,46 @@
+version 17.9
+service timestamps log datetime msec
+service password-encryption
+!
+hostname edge-r1
+enable secret 9 $9$Zk3eQ1xw$hT9Ff8yq0mJk2bPzQv7rXc
+!
+banner motd ^C
+Authorized access only. Sessions are logged.
+^C
+!
+interface GigabitEthernet0/0/0
+ description WAN uplink, permit routed traffic only
+ ip address 203.0.113.2 255.255.255.252
+ ip access-group EDGE-IN in
+ no shutdown
+!
+interface GigabitEthernet0/0/1
+ description LAN trunk to core
+ no ip address
+ no shutdown
+!
+interface GigabitEthernet0/0/1.10
+ encapsulation dot1Q 10
+ ip address 10.0.10.1 255.255.255.0
+ ipv6 address 2001:db8:10::1/64
+!
+ip access-list extended EDGE-IN
+ remark deny anything not allowed below
+ permit tcp any host 203.0.113.2 eq 22
+ permit icmp any any echo-reply
+ deny ip any any log
+!
+router ospf 1
+ router-id 10.0.0.1
+ passive-interface default
+ no passive-interface Gi0/0/1.10
+ network 10.0.10.0 0.0.0.255 area 0
+!
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+!
+line vty 0 4
+ transport input ssh
+ exec-timeout 10 0
+!
+end

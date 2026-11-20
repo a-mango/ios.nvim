@@ -6,6 +6,8 @@ settings, omni-completion that follows the enclosing configuration section, and
 a set of snippets. Everything except the snippet registration works without a
 setup call.
 
+![A router configuration highlighted by ios.nvim, with the completion menu open inside an interface](.github/screenshot.png)
+
 ## Requirements
 
 - Neovim. The plugin is developed on Neovim 0.12, and the continuous
@@ -127,6 +129,14 @@ status if any check fails. The Lua sources are linted with
 
 ```sh
 luacheck lua/ ftdetect/ ftplugin/ test/
+```
+
+The screenshot above is rendered with [vhs](https://github.com/charmbracelet/vhs)
+from `.github/screenshot.tape`, which opens `.github/screenshot.ios` in a clean
+Neovim:
+
+```sh
+vhs .github/screenshot.tape
 ```
 
 ## License
