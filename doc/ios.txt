@@ -1,0 +1,102 @@
+*ios.txt*  Cisco IOS configuration support
+
+==============================================================================
+CONTENTS                                                        *ios-contents*
+
+  1. Introduction ...................................... |ios.nvim|
+  2. Setup ............................................. |ios-setup|
+  3. Detection ......................................... |ios-detection|
+  4. Syntax ............................................ |ios-syntax|
+  5. Buffer settings ................................... |ios-ftplugin|
+  6. Completion ........................................ |ios-completion|
+  7. Snippets .......................................... |ios-snippets|
+
+==============================================================================
+1. INTRODUCTION                                                     *ios.nvim*
+
+ios.nvim adds filetype detection, syntax highlighting, buffer settings,
+omni-completion and snippets for Cisco Internetwork Operating System (IOS)
+configuration files. The filetype is `ios`. Everything except the snippet
+registration works without a setup call.
+
+==============================================================================
+2. SETUP                                                           *ios-setup*
+
+The plugin needs no setup call. |ios.setup()| only registers the snippets with
+LuaSnip.
+
+require("ios").setup({opts})                                     *ios.setup()*
+    Registers `snippets/ios.json` with LuaSnip through
+    `luasnip.loaders.from_vscode`. Does nothing when LuaSnip is not installed.
+
+    {opts} is an optional table with the following key:
+
+    snippets    (boolean, default `true`) Set to `false` to skip the LuaSnip
+                registration.
+
+==============================================================================
+3. DETECTION                                                   *ios-detection*
+
+The following files are set to the `ios` filetype:
+
+- files with the `.ios` extension,
+- files named `*-confg`, which is the default name IOS gives a configuration
+  copied over TFTP (e.g. `router1-confg`),
+- files named `running-config` or `startup-config`.
+
+Files ending in `.cfg`, `.conf` or `.txt` are set to `ios` only when one of
+their first 50 lines starts with `version <n>`, `hostname`, `interface`,
+`service timestamps`, `Building configuration` or `Current configuration`.
+Other files with these extensions keep the filetype Neovim gives them.
+
+==============================================================================
+4. SYNTAX                                                         *ios-syntax*
+
+The syntax file highlights comments, section commands at column 0, `no` and
+`default`, `permit`, `deny`, `shutdown`, interface names in long and short
+form, IPv4 and IPv6 addresses, masks, prefixes, MAC addresses, the hash that
+follows `secret <n>` and `password <n>`, and banner bodies with any delimiter.
+
+The text after `description` and `remark` is shown as a string, so keywords
+inside it are not highlighted. Every group links to a standard highlight
+group, so the active colorscheme applies.
+
+==============================================================================
+5. BUFFER SETTINGS                                              *ios-ftplugin*
+
+The ftplugin sets the following buffer-local options:
+
+- 'commentstring' to `! %s` and 'comments' to `:!`,
+- 'shiftwidth', 'tabstop' and 'softtabstop' to 1, with 'expandtab',
+- 'foldmethod' to `indent`,
+- `-` added to 'iskeyword', so that `access-list` counts as one word,
+- 'omnifunc' to the completion function described in |ios-completion|.
+
+All of them are reverted through `b:undo_ftplugin` when the filetype changes.
+
+==============================================================================
+6. COMPLETION                                                 *ios-completion*
+
+Use |i_CTRL-X_CTRL-O| in insert mode. At column 0 the candidates are global
+commands. On an indented line, the candidates depend on the section the line
+belongs to, i.e. the nearest line above it that starts at column 0 and is not
+a comment. The sections covered are `interface`, `router`, `line`,
+`ip access-list`, `route-map`, `vrf`, `class-map`, `policy-map` and `vlan`.
+
+The keyword tables are in `lua/ios/keywords.lua`.
+
+==============================================================================
+7. SNIPPETS                                                     *ios-snippets*
+
+The snippets are stored in VSCode format in `snippets/ios.json` and declared
+in `package.json`. With LuaSnip, call |ios.setup()| or load them directly:
+>lua
+
+    require("luasnip.loaders.from_vscode").lazy_load({
+      paths = { "<plugin dir>" },
+    })
+<
+Prefixes: `int`, `svi`, `access`, `trunk`, `acl`, `ospf`, `bgp`, `route`,
+`vlan`, `ssh`, `ntp`, `banner`, `po`.
+
+ vim:tw=78:ts=8:ft=help:norl:
