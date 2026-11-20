@@ -19,6 +19,7 @@ if vim.o.foldlevelstart < 0 then
 end
 
 vim.b.undo_ftplugin = table.concat({
-  "setlocal commentstring< comments< shiftwidth< tabstop< softtabstop< expandtab< omnifunc< iskeyword< foldmethod< foldlevel<",
+  "setlocal commentstring< comments< shiftwidth< tabstop< softtabstop< expandtab<",
+  "setlocal omnifunc< iskeyword< foldmethod< foldlevel<",
   "unlet! b:did_ftplugin",
 }, " | ")
