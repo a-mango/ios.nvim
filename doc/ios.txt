@@ -65,12 +65,13 @@ group, so the active colorscheme applies.
 ==============================================================================
 5. BUFFER SETTINGS                                              *ios-ftplugin*
 
-The ftplugin sets the following local options ('foldmethod' on the window,
-the others on the buffer):
+The ftplugin sets the following local options ('foldmethod' and 'foldlevel'
+on the window, the others on the buffer):
 
 - 'commentstring' to `! %s` and 'comments' to `:!`,
 - 'shiftwidth', 'tabstop' and 'softtabstop' to 1, with 'expandtab',
-- 'foldmethod' to `indent`,
+- 'foldmethod' to `indent` and 'foldlevel' to 99, so that files open with
+  every fold open ('foldlevel' is left alone when 'foldlevelstart' is set),
 - `-` added to 'iskeyword', so that `access-list` counts as one word,
 - 'omnifunc' to the completion function described in |ios-completion|.
 

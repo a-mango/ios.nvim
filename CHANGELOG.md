@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions
 follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Files no longer open with every block folded. The ftplugin sets `foldlevel`
+  to 99, unless `foldlevelstart` is set.
+
 ## [1.0.0] - 2026-11-20
 
 First public release.
@@ -26,4 +33,5 @@ First public release.
   `require("ios").setup()`.
 - Help file under `:help ios.nvim`.
 
+[Unreleased]: https://github.com/a-mango/ios.nvim/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/a-mango/ios.nvim/releases/tag/v1.0.0

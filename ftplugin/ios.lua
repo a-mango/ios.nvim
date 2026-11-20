@@ -13,8 +13,12 @@ bo.expandtab = true
 bo.omnifunc = "v:lua.require'ios.complete'.omnifunc"
 vim.opt_local.iskeyword:append("-")
 vim.opt_local.foldmethod = "indent"
+-- Open with every fold open, unless the user chose a start level.
+if vim.o.foldlevelstart < 0 then
+  vim.opt_local.foldlevel = 99
+end
 
 vim.b.undo_ftplugin = table.concat({
-  "setlocal commentstring< comments< shiftwidth< tabstop< softtabstop< expandtab< omnifunc< iskeyword< foldmethod<",
+  "setlocal commentstring< comments< shiftwidth< tabstop< softtabstop< expandtab< omnifunc< iskeyword< foldmethod< foldlevel<",
   "unlet! b:did_ftplugin",
 }, " | ")

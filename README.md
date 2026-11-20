@@ -76,9 +76,10 @@ group links to a standard highlight group (`Comment`, `Statement`, `Number`,
 
 The ftplugin sets `commentstring` to `! %s`, indents by one space (the indent
 IOS uses in its own output), folds by indent and adds `-` to `iskeyword` so that
-`access-list` or `Port-channel` count as one word. All options are set locally
-(`foldmethod` on the window, the others on the buffer) and are reverted when the
-filetype changes.
+`access-list` or `Port-channel` count as one word. Files open with every fold
+open, unless `foldlevelstart` is set. All options are set locally (`foldmethod`
+and `foldlevel` on the window, the others on the buffer) and are reverted when
+the filetype changes.
 
 ## Completion
 
