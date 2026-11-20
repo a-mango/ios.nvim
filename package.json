@@ -1,0 +1,7 @@
+{
+  "name": "ios.nvim",
+  "engines": { "vscode": "*" },
+  "contributes": {
+    "snippets": [{ "language": "ios", "path": "./snippets/ios.json" }]
+  }
+}

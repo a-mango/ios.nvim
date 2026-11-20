@@ -1,0 +1,67 @@
+{
+  "Interface": {
+    "prefix": "int",
+    "body": ["interface ${1:GigabitEthernet0/0}", " description ${2:desc}", " ip address ${3:10.0.0.1} ${4:255.255.255.0}", " no shutdown", "!"],
+    "description": "Routed interface"
+  },
+  "SVI": {
+    "prefix": "svi",
+    "body": ["interface Vlan${1:10}", " description ${2:desc}", " ip address ${3:10.0.10.1} ${4:255.255.255.0}", " no shutdown", "!"],
+    "description": "Switch virtual interface"
+  },
+  "Access port": {
+    "prefix": "access",
+    "body": ["interface ${1:GigabitEthernet1/0/1}", " description ${2:desc}", " switchport mode access", " switchport access vlan ${3:10}", " spanning-tree portfast", " spanning-tree bpduguard enable", "!"],
+    "description": "Access port"
+  },
+  "Trunk port": {
+    "prefix": "trunk",
+    "body": ["interface ${1:GigabitEthernet1/0/48}", " description ${2:uplink}", " switchport trunk encapsulation dot1q", " switchport mode trunk", " switchport trunk allowed vlan ${3:10,20,30}", " switchport nonegotiate", "!"],
+    "description": "Trunk port"
+  },
+  "Extended ACL": {
+    "prefix": "acl",
+    "body": ["ip access-list extended ${1:NAME}", " remark ${2:desc}", " permit ${3:tcp} ${4:any} ${5:any} eq ${6:443}", " deny ip any any log", "!"],
+    "description": "Extended named ACL"
+  },
+  "OSPF": {
+    "prefix": "ospf",
+    "body": ["router ospf ${1:1}", " router-id ${2:1.1.1.1}", " passive-interface default", " no passive-interface ${3:GigabitEthernet0/0}", " network ${4:10.0.0.0} ${5:0.0.0.255} area ${6:0}", "!"],
+    "description": "OSPF process"
+  },
+  "BGP": {
+    "prefix": "bgp",
+    "body": ["router bgp ${1:65000}", " bgp router-id ${2:1.1.1.1}", " bgp log-neighbor-changes", " neighbor ${3:192.0.2.2} remote-as ${4:65001}", " address-family ipv4", "  network ${5:10.0.0.0} mask ${6:255.255.255.0}", "  neighbor ${3} activate", " exit-address-family", "!"],
+    "description": "BGP process"
+  },
+  "Static route": {
+    "prefix": "route",
+    "body": "ip route ${1:0.0.0.0} ${2:0.0.0.0} ${3:192.0.2.1}",
+    "description": "Static route"
+  },
+  "VLAN": {
+    "prefix": "vlan",
+    "body": ["vlan ${1:10}", " name ${2:USERS}", "!"],
+    "description": "VLAN definition"
+  },
+  "SSH and AAA": {
+    "prefix": "ssh",
+    "body": ["ip domain-name ${1:example.com}", "crypto key generate rsa modulus 2048", "ip ssh version 2", "aaa new-model", "aaa authentication login default local", "username ${2:admin} privilege 15 secret ${3:password}", "line vty 0 15", " transport input ssh", " login authentication default", " exec-timeout 10 0", "!"],
+    "description": "SSH with local AAA"
+  },
+  "NTP and logging": {
+    "prefix": "ntp",
+    "body": ["ntp server ${1:192.0.2.123}", "logging host ${2:192.0.2.50}", "logging trap informational", "service timestamps log datetime msec"],
+    "description": "NTP and syslog"
+  },
+  "Banner": {
+    "prefix": "banner",
+    "body": ["banner motd ^C", "${1:Authorized access only.}", "^C"],
+    "description": "MOTD banner"
+  },
+  "Port-channel": {
+    "prefix": "po",
+    "body": ["interface Port-channel${1:1}", " description ${2:desc}", " switchport mode trunk", "!", "interface range ${3:GigabitEthernet1/0/1 - 2}", " channel-group ${1} mode ${4:active}", "!"],
+    "description": "LACP port-channel"
+  }
+}

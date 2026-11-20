@@ -1,0 +1,38 @@
+Building configuration...
+
+version 15.2
+service timestamps log datetime msec
+!
+hostname R1
+!
+enable secret 5 $1$abcd$hashhashhash
+!
+banner motd ^C
+interface permit deny shutdown
+This is a banner
+^C
+!
+interface GigabitEthernet0/0/1
+ description permit uplink to 10.0.0.1
+ ip address 10.0.0.1 255.255.255.0
+ no shutdown
+!
+interface Vlan10
+ ip address 10.0.10.1 255.255.255.0
+ ipv6 address 2001:db8::1/64
+!
+ip access-list extended EDGE
+ remark deny everything else
+ permit tcp any host 10.0.0.5 eq 443
+ deny ip any any log
+!
+router ospf 1
+ network 10.0.0.0 0.0.0.255 area 0
+!
+ip route 0.0.0.0 0.0.0.0 10.0.0.254
+mac address-table static aaaa.bbbb.cccc vlan 10 interface Gi1/0/1
+line vty 0 4
+ password 7 0822455D0A16
+ transport input ssh
+!
+end
